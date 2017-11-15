@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		9326637B1FBBB253002B0F8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9326637A1FBBB253002B0F8B /* AppDelegate.swift */; };
-		9326637D1FBBB253002B0F8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9326637C1FBBB253002B0F8B /* ViewController.swift */; };
+		9326637D1FBBB253002B0F8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9326637C1FBBB253002B0F8B /* LoginViewController.swift */; };
 		932663801FBBB253002B0F8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9326637E1FBBB253002B0F8B /* Main.storyboard */; };
 		932663821FBBB253002B0F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 932663811FBBB253002B0F8B /* Assets.xcassets */; };
 		932663851FBBB253002B0F8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 932663831FBBB253002B0F8B /* LaunchScreen.storyboard */; };
 		932663901FBBB253002B0F8B /* bookScanTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9326638F1FBBB253002B0F8B /* bookScanTestTests.swift */; };
 		9326639B1FBBB253002B0F8B /* bookScanTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9326639A1FBBB253002B0F8B /* bookScanTestUITests.swift */; };
+		932663A91FBBB615002B0F8B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663A81FBBB615002B0F8B /* TabBarController.swift */; };
+		932663AB1FBBB98F002B0F8B /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663AA1FBBB98F002B0F8B /* UserViewController.swift */; };
+		932663AD1FBBC3E8002B0F8B /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +39,7 @@
 /* Begin PBXFileReference section */
 		932663771FBBB253002B0F8B /* bookScanTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bookScanTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9326637A1FBBB253002B0F8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9326637C1FBBB253002B0F8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9326637C1FBBB253002B0F8B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9326637F1FBBB253002B0F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		932663811FBBB253002B0F8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		932663841FBBB253002B0F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +50,9 @@
 		932663961FBBB253002B0F8B /* bookScanTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bookScanTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9326639A1FBBB253002B0F8B /* bookScanTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookScanTestUITests.swift; sourceTree = "<group>"; };
 		9326639C1FBBB253002B0F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		932663A81FBBB615002B0F8B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		932663AA1FBBB98F002B0F8B /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				9326637A1FBBB253002B0F8B /* AppDelegate.swift */,
-				9326637C1FBBB253002B0F8B /* ViewController.swift */,
+				9326637C1FBBB253002B0F8B /* LoginViewController.swift */,
 				9326637E1FBBB253002B0F8B /* Main.storyboard */,
 				932663811FBBB253002B0F8B /* Assets.xcassets */,
 				932663831FBBB253002B0F8B /* LaunchScreen.storyboard */,
 				932663861FBBB253002B0F8B /* Info.plist */,
+				932663A81FBBB615002B0F8B /* TabBarController.swift */,
+				932663AA1FBBB98F002B0F8B /* UserViewController.swift */,
+				932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */,
 			);
 			path = bookScanTest;
 			sourceTree = "<group>";
@@ -259,7 +268,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9326637D1FBBB253002B0F8B /* ViewController.swift in Sources */,
+				932663A91FBBB615002B0F8B /* TabBarController.swift in Sources */,
+				932663AB1FBBB98F002B0F8B /* UserViewController.swift in Sources */,
+				9326637D1FBBB253002B0F8B /* LoginViewController.swift in Sources */,
+				932663AD1FBBC3E8002B0F8B /* ScannerViewController.swift in Sources */,
 				9326637B1FBBB253002B0F8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,11 +441,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P9UWAG6NB5;
 				INFOPLIST_FILE = bookScanTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = house.fillmore.bookScanTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -444,11 +457,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P9UWAG6NB5;
 				INFOPLIST_FILE = bookScanTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = house.fillmore.bookScanTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
