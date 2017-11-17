@@ -17,6 +17,12 @@
 		932663A91FBBB615002B0F8B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663A81FBBB615002B0F8B /* TabBarController.swift */; };
 		932663AB1FBBB98F002B0F8B /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663AA1FBBB98F002B0F8B /* UserViewController.swift */; };
 		932663AD1FBBC3E8002B0F8B /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */; };
+		93EE42CB1FBC91B9003D57DF /* NewBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42CA1FBC91B9003D57DF /* NewBookViewController.swift */; };
+		93EE42CE1FBC9FB6003D57DF /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42CD1FBC9FB6003D57DF /* Book.swift */; };
+		93EE42D11FBCB934003D57DF /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42D01FBCB934003D57DF /* Api.swift */; };
+		93EE42D31FBCBF4B003D57DF /* Valid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42D21FBCBF4B003D57DF /* Valid.swift */; };
+		93EE42D51FBCC1DD003D57DF /* BooksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42D41FBCC1DD003D57DF /* BooksListViewController.swift */; };
+		93EE42D71FBCDD79003D57DF /* BookObjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EE42D61FBCDD79003D57DF /* BookObjectTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,12 @@
 		932663A81FBBB615002B0F8B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		932663AA1FBBB98F002B0F8B /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		93EE42CA1FBC91B9003D57DF /* NewBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookViewController.swift; sourceTree = "<group>"; };
+		93EE42CD1FBC9FB6003D57DF /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		93EE42D01FBCB934003D57DF /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		93EE42D21FBCBF4B003D57DF /* Valid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valid.swift; sourceTree = "<group>"; };
+		93EE42D41FBCC1DD003D57DF /* BooksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListViewController.swift; sourceTree = "<group>"; };
+		93EE42D61FBCDD79003D57DF /* BookObjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookObjectTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +115,10 @@
 		932663791FBBB253002B0F8B /* bookScanTest */ = {
 			isa = PBXGroup;
 			children = (
+				93EE42CF1FBCB916003D57DF /* utils */,
+				93EE42CC1FBC9FA5003D57DF /* models */,
 				9326637A1FBBB253002B0F8B /* AppDelegate.swift */,
+				93EE42D61FBCDD79003D57DF /* BookObjectTableViewCell.swift */,
 				9326637C1FBBB253002B0F8B /* LoginViewController.swift */,
 				9326637E1FBBB253002B0F8B /* Main.storyboard */,
 				932663811FBBB253002B0F8B /* Assets.xcassets */,
@@ -112,6 +127,8 @@
 				932663A81FBBB615002B0F8B /* TabBarController.swift */,
 				932663AA1FBBB98F002B0F8B /* UserViewController.swift */,
 				932663AC1FBBC3E8002B0F8B /* ScannerViewController.swift */,
+				93EE42CA1FBC91B9003D57DF /* NewBookViewController.swift */,
+				93EE42D41FBCC1DD003D57DF /* BooksListViewController.swift */,
 			);
 			path = bookScanTest;
 			sourceTree = "<group>";
@@ -132,6 +149,23 @@
 				9326639C1FBBB253002B0F8B /* Info.plist */,
 			);
 			path = bookScanTestUITests;
+			sourceTree = "<group>";
+		};
+		93EE42CC1FBC9FA5003D57DF /* models */ = {
+			isa = PBXGroup;
+			children = (
+				93EE42CD1FBC9FB6003D57DF /* Book.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		93EE42CF1FBCB916003D57DF /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				93EE42D01FBCB934003D57DF /* Api.swift */,
+				93EE42D21FBCBF4B003D57DF /* Valid.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,8 +304,14 @@
 			files = (
 				932663A91FBBB615002B0F8B /* TabBarController.swift in Sources */,
 				932663AB1FBBB98F002B0F8B /* UserViewController.swift in Sources */,
+				93EE42D71FBCDD79003D57DF /* BookObjectTableViewCell.swift in Sources */,
+				93EE42CE1FBC9FB6003D57DF /* Book.swift in Sources */,
 				9326637D1FBBB253002B0F8B /* LoginViewController.swift in Sources */,
+				93EE42D31FBCBF4B003D57DF /* Valid.swift in Sources */,
 				932663AD1FBBC3E8002B0F8B /* ScannerViewController.swift in Sources */,
+				93EE42CB1FBC91B9003D57DF /* NewBookViewController.swift in Sources */,
+				93EE42D51FBCC1DD003D57DF /* BooksListViewController.swift in Sources */,
+				93EE42D11FBCB934003D57DF /* Api.swift in Sources */,
 				9326637B1FBBB253002B0F8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

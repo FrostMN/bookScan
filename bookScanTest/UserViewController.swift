@@ -15,6 +15,8 @@ class UserViewController: UIViewController {
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!
     
+    let testISBN = "1234567890"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -26,10 +28,47 @@ class UserViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        isbnField.text = ""
+    }
+    
     @IBAction func searchISBN(_ sender: UIButton) {
         print("In searchISBN")
         let ISBN = isbnField.text!
         print(ISBN)
+        if (Api.bookExists(ISBN: ISBN)) {
+            print("isbn matches")
+            let books = Api.searchBooks(ISBN: ISBN)
+            print(books)
+            
+            if (books.count == 1) {
+                
+            } else {
+                
+                //switching the screen
+                let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "BooksListViewController") as! BooksListViewController
+                profileViewController.books = books
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+                self.dismiss(animated: false, completion: nil)
+            }
+            
+        } else {
+            print("isbn does not match")
+            
+            let ISBN10 = isbnField.text!
+            let newBook = Api.getNewBook(ISBN: ISBN10)
+            
+            
+            print(newBook.title)
+            
+            
+            //switching the screen
+            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "NewBookViewController") as! NewBookViewController
+            profileViewController.book = newBook
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+            self.dismiss(animated: false, completion: nil)
+
+        }
     }
     
     @IBAction func logoutButton(_ sender: UIButton) {
