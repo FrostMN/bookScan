@@ -29,7 +29,7 @@ class Api {
         }
     }
     
-    static func searchBooks (ISBN isbn: String) -> Array<Book> {
+    static func searchBooksTest (ISBN isbn: String) -> Array<Book> {
         let books = [getNewBook(ISBN: isbn, bookID: 1),
                      getNewBook(ISBN: isbn, bookID: 2),
                      getNewBook(ISBN: isbn, bookID: 3),
@@ -37,57 +37,92 @@ class Api {
         return books
     }
     
-    static func queryUser (userName user:String, password pword: String, pyBookURL url: String) -> [String: String] {
-        let urlString = "https://\(url)/api/v1/login"
+    static func queryISBN (ISBN isbn: String, URL url: String, API key: String ) {
+        print("in queryISBN")
+        isbnInDB(ISBN: isbn, URL: url, API: key)
+    }
+    
+    static func isbnInDB(ISBN isbn:String, URL url:String, API key: String) {
+        // prepares the url from the login screen to be used in the api call
+        // TODO better validation and formatting of the string
+        let urlString = "https://\(url)/api/v1/\(key)/exists/\(isbn)"
+        let ur = url
+        
         print(urlString)
+        
+        // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
         let url = URL(string: urlString)!
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let postString = "{ \"user\": \"\(user)\", \"password\": \"\(pword)\" }"
-        request.httpBody = postString.data(using: .utf8)
+        request.httpMethod = "GET"
         
-        var test = [String: Any]()
-        
-        
-//        let task = session.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+        // does http request
         let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             guard let data = data else {
                 print("in let data guard")
+                print("connection failure is one option why wh get here")
                 return
             }
-            guard let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) else {
-                print("in let json guard")
-                return
+            guard let isbnExists = try? JSONSerialization.jsonObject(with: data, options: []) as! [String:Any?]
+                else {
+                    print("in let json guard of isbnInDB")
+                    
+                    return
             }
-            print("in completed request")
-            print(json)
-            test = json as! [String:String]
-            print("test in task")
-            print(test)
+            
+            if isbnExists["isbnExists"]!! as! Bool {
+                print("it exists")
+                
+    
+                
+            } else {
+                print("it dosent exist")
+                addBook(ISBN: isbn, URL: ur, API: key)
+            }
+            
         })
-        
-        
         task.resume()
-        print("test")
-        print(test)
-        let user = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
-        print(user)
-        return user
     }
+    
+    static func searchBooks( ISBN isbn: String, action act:() ) {
+        
+    }
+    
+    static func addBook( ISBN isbn: String, URL url: String, API key: String ) {
+        // create url string for request
+        let urlString = "https://\(url)/api/get/\(key)/\(isbn)"
+        print("in addBook()")
+        print(urlString)
+        
+        // creates urlsession and request
+        let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
+        let url = URL(string: urlString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
 
-
-    static func testURL (pyBookURL url: String) {
-        let url = NSURL(string: "https://\(url)")
-        let data = NSData(contentsOf: url! as URL)
-        do {
-            let json = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers)
-            print(json)
-            for gym in json as! [AnyObject] {
-                print(gym)
+        let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+            guard let data = data else {
+                print("in let data guard")
+                print("connection failure is one option why wh get here")
+                return
             }
-        } catch {
-            print("Error")
-        }
+            guard let bookJson = try? JSONSerialization.jsonObject(with: data, options: []) as! [String:Any?]
+                else {
+                    print("in let json guard of isbnInDB")
+                    
+                    return
+            }
+            
+            print(bookJson["title"]!!)
+            
+        })
+        task.resume()
+        
+        
     }
+    
+    
+    
+    
+    
 }

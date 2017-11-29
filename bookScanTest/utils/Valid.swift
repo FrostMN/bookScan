@@ -10,6 +10,7 @@ import Foundation
 
 class Valid {
     static func isbn(ISBN isbn:String) -> Bool {
+        
         return true
     }
 }

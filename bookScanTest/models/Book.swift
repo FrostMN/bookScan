@@ -10,16 +10,20 @@ import Foundation
 
 class Book {
     let title, isbn10, isbn13,
-    author_first_name, author_last_name: String
+    author_first_name, author_last_name, location: String
     let bookId: Int
+    let status: Bool
     init(bookTitle Title:String, isbn10 ISBN10:String, isbn13 ISBN13:String,
-         authorFirstName first:String, authorLastName last:String, bookID id:Int=1) {
+         authorFirstName first:String, authorLastName last:String, bookID id:Int=1, bookStatus status: Bool=false,
+         bookLocation location: String = "Shelf") {
         self.title = Title
         self.isbn10 = ISBN10
         self.isbn13 = ISBN13
         self.author_first_name = first
         self.author_last_name = last
         self.bookId = id
+        self.status = status
+        self.location = location
     }
 
     init(bookInfoArray BookInfo:[String]) {
@@ -29,6 +33,8 @@ class Book {
         self.author_first_name = BookInfo[3]
         self.author_last_name = BookInfo[4]
         self.bookId = Int(BookInfo[5])!
+        self.status = Bool(BookInfo[6])!
+        self.location = BookInfo[7]
     }
 
 }
