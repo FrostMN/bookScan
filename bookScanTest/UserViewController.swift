@@ -214,7 +214,7 @@ class UserViewController: UIViewController {
             print(books)
             
             if books.count == 1 {
-                //BookStatusViewController
+
                 //switching the screen
                 let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "BookStatusViewController") as! BookStatusViewController
                 profileViewController.book = books[0]
@@ -231,5 +231,4 @@ class UserViewController: UIViewController {
         })
         task.resume()
     }
-    
 }

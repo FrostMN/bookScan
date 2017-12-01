@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import AVFoundation
 
 class LoginViewController: UIViewController {
+    // used to test if device has camera
+    var captureSession: AVCaptureSession!
     
     //the defaultvalues to store user data
     let defaultValues = UserDefaults.standard
@@ -22,13 +25,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        //if user is already logged in switching to profile screen
-//        if defaultValues.string(forKey: "username") != nil{
-//            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
-//            self.navigationController?.pushViewController(profileViewController, animated: true)
-//
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,16 +33,11 @@ class LoginViewController: UIViewController {
             passwordField.isHidden = true
             pyBookURL.isHidden = true
             loginButtonOutlet.isHidden = true
-            
-//            let url = self.defaultValues.string(forKey: "url")
-//            let key = self.defaultValues.string(forKey: "api")
 
             self.navigationController?.isNavigationBarHidden = true
-
             
             let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
-//            profileViewController.pyBookUrl = url!
-//            profileViewController.apiKey = key!
+
             self.navigationController?.pushViewController(profileViewController, animated: true)
         } else {
             usernameField.isHidden = false
@@ -62,29 +53,17 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func loginButton(_ sender: UIButton) {
-
-        
-        // prolloy ok to delete
-//        print("in loginButton")
-        
-        
+    @IBAction func loginButton(_ sender: UIButton) {        
         let username = usernameField.text!
         let password = passwordField.text!
         let url = pyBookURL.text!
         queryUser(userName: username, password: password, pyBookURL: url)
-
-        // prolloy ok to delete
-//        doLogin(username: username, password: password, pyBookURL: url)
-        
     }
 
     
     func doLogin(userDict user: [String:Any?]) {
 
         if !(user["error"] as! Bool) {
-            // probably ok to delete
-            // print("They match")
             
             //saving user values to defaults
             self.defaultValues.set(user["username"]!!, forKey: "username")
@@ -93,51 +72,33 @@ class LoginViewController: UIViewController {
             self.defaultValues.set(user["ApiKey"]!!, forKey: "api")
             self.defaultValues.set(pyBookURL.text, forKey: "url")
 
+            // testing if device has camera
+            var hasCamera: Bool
+            if AVCaptureDevice.default(for: .video) != nil {
+                hasCamera = true
+            } else {
+                hasCamera = false
+            }
             
-            let ScannerViewController = self.storyboard?.instantiateViewController(withIdentifier: "ScannerViewController") as! ScannerViewController
-            ScannerViewController.key = user["ApiKey"]!! as! String
-            ScannerViewController.url = pyBookURL.text!
-            
-            let UserViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
-            UserViewController.key = user["ApiKey"]!! as! String
-            UserViewController.url = pyBookURL.text!
-            
-            //switching the screen
-            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
-            
-            // prolloy ok to delete
-//            print(user["ApiKey"]!! as! String)
-            
-//            profileViewController.apiKey = user["ApiKey"]!! as! String
-            
-            // prolloy ok to delete
-//            print(pyBookURL.text!)
-            
-//            profileViewController.pyBookUrl = pyBookURL.text!
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-            self.dismiss(animated: false, completion: nil)
+            if (hasCamera) {
+                // Has camera
+                print("has camera")
 
+                //switching the screen
+                let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+                self.dismiss(animated: false, completion: nil)
+            } else {
+                print("no camera")
+                //switching the screen
+                let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+                self.dismiss(animated: false, completion: nil)
+            }
         } else {
             print("bad bassword or username")
         }
     }
-    
-    // I dont think i need this... will delete later
-//    // the following function was from
-//    // https://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
-//    func convertToDictionary(text: String) -> [String : String] {
-//        if let data = text.data(using: .utf8) {
-//            do {
-//                return (try JSONSerialization.jsonObject(with: data, options: []) as? [String : String])!
-//            } catch {
-//                print("in catch")
-//                print(error.localizedDescription)
-//                print("end catch")
-//            }
-//        }
-//        return ["error": "true"]
-//    }
-
     
     // function to do an api call and authenticate user
     func queryUser (userName user:String, password pword: String, pyBookURL url: String) {

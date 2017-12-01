@@ -33,11 +33,6 @@ class NewBookViewController: UIViewController {
         //load valeues from defaults
         url = defaultValues.string(forKey: "url")!
         api = defaultValues.string(forKey: "api")!
-
-        //prolly can delete
-//        print("NewBookViewCOntroller viewDidLoad()")
-//        print(book.title)
-        
         
         bookTitle.text = book.title
         isbn10Field.text = book.isbn10

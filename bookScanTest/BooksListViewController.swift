@@ -108,19 +108,6 @@ class BooksListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // determines if click is last row or not
         if indexPath.row < books.count {
-//            if books[indexPath.row].status {
-//                //switching the screen to ReturnBookView
-//                let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "ReturnBookViewController") as! ReturnBookViewController
-//                profileViewController.book = self.books[indexPath.row]
-//                self.navigationController?.pushViewController(profileViewController, animated: true)
-//                self.dismiss(animated: false, completion: nil)
-//            } else {
-//                // need to query users
-//                queryUsers(API: user_api_key, pyBookURL: pyBookURL, Book: self.books[indexPath.row])
-//
-//            }
-//
-//
   
             defaultValues.set(true, forKey: "fromBookView")
             
