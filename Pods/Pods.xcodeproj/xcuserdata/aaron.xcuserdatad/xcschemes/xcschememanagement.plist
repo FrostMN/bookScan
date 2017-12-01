@@ -25,21 +25,21 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Pods-bookScanTest.xcscheme</key>
+		<key>Pods-bookScan.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Pods-bookScanTestTests.xcscheme</key>
+		<key>Pods-bookScanTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>Pods-bookScanTestUITests.xcscheme</key>
+		<key>Pods-bookScanUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

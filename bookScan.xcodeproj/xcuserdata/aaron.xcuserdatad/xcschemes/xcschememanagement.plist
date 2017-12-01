@@ -4,10 +4,28 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>bookScanTest.xcscheme</key>
+		<key>bookScan.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>932663761FBBB253002B0F8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9326638A1FBBB253002B0F8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>932663951FBBB253002B0F8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
