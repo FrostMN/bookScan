@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -382,18 +383,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add New Copy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc5-Ps-zZM">
-                                            <rect key="frame" x="130" y="27" width="114" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Copy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc5-Ps-zZM">
+                                            <rect key="frame" x="16" y="27" width="343" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="fc5-Ps-zZM" secondAttribute="trailing" constant="16" id="953-P2-pcN"/>
-                                        <constraint firstAttribute="bottom" secondItem="fc5-Ps-zZM" secondAttribute="bottom" constant="10.5" id="L0i-eM-qU2"/>
-                                        <constraint firstItem="fc5-Ps-zZM" firstAttribute="centerY" secondItem="3s1-uH-8cD" secondAttribute="centerY" id="aKc-r3-mVB"/>
-                                        <constraint firstItem="fc5-Ps-zZM" firstAttribute="centerX" secondItem="3s1-uH-8cD" secondAttribute="centerX" id="ycn-Zr-qgP"/>
+                                        <constraint firstItem="fc5-Ps-zZM" firstAttribute="centerY" secondItem="3s1-uH-8cD" secondAttribute="centerY" id="7xL-nI-wTL"/>
+                                        <constraint firstItem="fc5-Ps-zZM" firstAttribute="trailing" secondItem="3s1-uH-8cD" secondAttribute="trailingMargin" id="L1s-N7-sEb"/>
+                                        <constraint firstItem="fc5-Ps-zZM" firstAttribute="leading" secondItem="3s1-uH-8cD" secondAttribute="leadingMargin" id="xRK-EG-FvM"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
@@ -407,7 +407,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPF-a7-fNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3780" y="-348"/>
+            <point key="canvasLocation" x="3779.5" y="-348.5"/>
         </scene>
         <!--Book Status View Controller-->
         <scene sceneID="Q2M-mY-6jQ">

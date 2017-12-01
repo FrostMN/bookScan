@@ -66,6 +66,10 @@ class ScannerViewController: UIViewController {
 //        searchIsbnField.text = ""
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        defaultValues.set(false, forKey: "fromBookView")
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 //        self.navigationController?.isNavigationBarHidden = false

@@ -1,0 +1,6 @@
+framework module Pods_bookScanTest {
+  umbrella header "Pods-bookScanTest-umbrella.h"
+
+  export *
+  module * { export * }
+}
