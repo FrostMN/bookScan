@@ -20,10 +20,14 @@ class ScannerViewController: UIViewController {
     
     // setting up outlets
     @IBOutlet weak var searchIsbnField: UITextField!
+    @IBOutlet weak var searchIsbnButton: UIButton!
+    
+    @IBOutlet weak var scanIsbnButton: UIButton!
     
     // setting up vars
     var url = ""
     var key = ""
+    var cover = UIImage(named: "defaultCover")
 
     // set up scanner
     private let controller = BarcodeScannerController()
@@ -57,6 +61,16 @@ class ScannerViewController: UIViewController {
         controller.codeDelegate = self as BarcodeScannerCodeDelegate
         controller.errorDelegate = self as BarcodeScannerErrorDelegate
         controller.dismissalDelegate = self as BarcodeScannerDismissalDelegate
+        
+        if defaultValues.bool(forKey: "camera") {
+            print(defaultValues.bool(forKey: "camera"))
+            print("in view will appers camera")
+            scanIsbnButton.isHidden = false
+            
+        } else {
+            print("in view will appers no camera")
+            scanIsbnButton.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,10 +78,21 @@ class ScannerViewController: UIViewController {
         defaultValues.set(false, forKey: "fromBookView")
         self.navigationController?.isNavigationBarHidden = true
 //        searchIsbnField.text = ""
+        
+//        if defaultValues.bool(forKey: "camera") {
+//            print(defaultValues.bool(forKey: "camera"))
+//            print("in view will appers camera")
+//            scanIsbnButton.isHidden = false
+//
+//        } else {
+//            print("in view will appers no camera")
+//            scanIsbnButton.isHidden = true
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         defaultValues.set(false, forKey: "fromBookView")
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,7 +106,7 @@ class ScannerViewController: UIViewController {
         let urlString = "https://\(url)/api/v1/\(key)/exists/\(isbn)"
         let ur = url
         
-        print(urlString)
+//        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -109,7 +134,10 @@ class ScannerViewController: UIViewController {
                 
             } else {
                 print("it dosent exist")
-                self.addBook(ISBN: isbn, URL: ur, API: key)
+                self.defaultValues.set(true, forKey: "showCoverImage")
+                self.getBookCover(ISBN: isbn, URL: ur, API: key)
+
+//                self.addBook(ISBN: isbn, URL: ur, API: key)
             }
             
         })
@@ -120,8 +148,8 @@ class ScannerViewController: UIViewController {
     func addBook( ISBN isbn: String, URL url: String, API key: String ) {
         // create url string for request
         let urlString = "https://\(url)/api/get/\(key)/\(isbn)"
-        print("in addBook()")
-        print(urlString)
+//        print("in addBook()")
+//        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -142,16 +170,14 @@ class ScannerViewController: UIViewController {
                     return
             }
             
-            print(bookJson)
-            print(bookJson["status"]!!)
             let status = bookJson["status"]!! as! Bool
-            print(bookJson["title"]!!)
+//            print(bookJson["title"]!!)
             let title = bookJson["title"]!! as! String
-            print(bookJson["isbn_10"]!!)
+//            print(bookJson["isbn_10"]!!)
             let isbn10 = bookJson["isbn_10"]!! as! String
-            print(bookJson["isbn_13"]!!)
+//            print(bookJson["isbn_13"]!!)
             let isbn13 = bookJson["isbn_13"]!! as! String
-            print(bookJson["author"]!!)
+//            print(bookJson["author"]!!)
             let author = bookJson["author"]!! as! String
             let author_fn = author.components(separatedBy: " ")[0]
             let author_ln = author.components(separatedBy: " ")[1]
@@ -159,9 +185,11 @@ class ScannerViewController: UIViewController {
             // create new book object to send to view
             let newBook = Book(bookTitle: title, isbn10: isbn10, isbn13: isbn13, authorFirstName: author_fn, authorLastName: author_ln, bookStatus: status)
             
+            
             //switching the screen
             let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "NewBookViewController") as! NewBookViewController
             profileViewController.book = newBook
+            profileViewController.bookCover = self.cover
             self.navigationController?.pushViewController(profileViewController, animated: true)
             self.dismiss(animated: false, completion: nil)
             
@@ -172,8 +200,6 @@ class ScannerViewController: UIViewController {
     func queryISBN(ISBN isbn: String, URL url: String, API key: String ) {
         // create url string for request
         let urlString = "https://\(url)/api/v1/\(key)/books/\(isbn)"
-        print("in queryISBN()")
-        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -187,7 +213,7 @@ class ScannerViewController: UIViewController {
                 print("connection failure is one option why wh get here")
                 return
             }
-            print(data)
+
             guard let booksJson = try? JSONSerialization.jsonObject(with: data, options: []) as! Array<[String:Any?]>
                 else {
                     print("in let json guard of queryISBN")
@@ -195,13 +221,9 @@ class ScannerViewController: UIViewController {
                     return
             }
             
-            print(booksJson)
-            
             var books = [Book]()
             
             for bk in booksJson {
-                print("in f eeach")
-                print(bk)
                 let status = bk["status"]!! as! Bool
                 let title = bk["title"]!! as! String
                 let isbn10 = bk["isbn_10"]!! as! String
@@ -216,9 +238,9 @@ class ScannerViewController: UIViewController {
                 books.append(book)
             }
             
-            print(books)
             
             if books.count == 1 {
+                
                 //switching the screen to single book options
                 let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "BookStatusViewController") as! BookStatusViewController
                 profileViewController.book = books[0]
@@ -235,17 +257,53 @@ class ScannerViewController: UIViewController {
         })
         task.resume()
     }
+
+    // the getBookCover() function is adapted from
+    // https://stackoverflow.com/questions/38643686/how-to-display-image-from-api-in-swift
+    
+    func getBookCover(ISBN isbn: String, URL ur: String, API key: String) {
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        if let url = NSURL(string: "https://covers.openlibrary.org/b/isbn/\(isbn)-L.jpg"){
+            
+            let task = session.dataTask(with: url as URL, completionHandler: {data, response, error in
+                
+                if let err = error {
+                    print("Error: \(err)")
+                    return
+                }
+                
+                if let http = response as? HTTPURLResponse {
+                    if http.statusCode == 200 {
+                        DispatchQueue.main.async {
+                            guard let apiCover = UIImage(data: data!) else {
+                                self.cover = UIImage(named: "defaultCover")!
+                                return
+                            }
+                            
+                            self.cover = apiCover
+                            
+                            self.addBook(ISBN: isbn, URL: ur, API: key)
+
+                        }
+                    }
+                }
+            })
+            task.resume()
+        }
+    }
 }
+
 
 // adds action to scanner
 extension ScannerViewController: BarcodeScannerCodeDelegate {
     func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
-        print("Barcode Data: \(code)")
-        print("Symbology Type: \(type)")
-                
+//        print("Barcode Data: \(code)")
+//        print("Symbology Type: \(type)")
+        
         isbnInDB(ISBN: code, URL: url, API: key)
         
-        let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        let delayTime = DispatchTime.now() + Double(Int64(12 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             controller.resetWithError()
         }

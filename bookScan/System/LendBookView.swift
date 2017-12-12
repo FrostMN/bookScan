@@ -1,5 +1,5 @@
 //
-//  ReturnBookViewController.swift
+//  LendBookView.swift
 //  bookScanTest
 //
 //  Created by Aaron Souer on 11/20/17.
@@ -8,32 +8,56 @@
 
 import UIKit
 
-class ReturnBookViewController: UIViewController {
+class LendBookView: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     //the defaultvalues to access user data
     let defaultValues = UserDefaults.standard
 
-
+    // sets vars for view
     var book: Book? = nil
-    var user_api_key = ""
+    var users = Array<[String:Any?]>()
+    var spinnerData = Array<String>()
+    var selectedUser = ""
     var pyBookURL = ""
+    var user_api_key = ""
     
-    @IBOutlet weak var bookTitleLabel: UILabel!
-    @IBOutlet weak var lendeeNameLabel: UILabel!
-    
-    override func viewWillAppear(_ animated: Bool) {
-        // loads info into labels
-        bookTitleLabel.text = book?.title
-        lendeeNameLabel.text = book?.location
-        
-        // unhides nav bar for this view
-        self.navigationController?.isNavigationBarHidden = false
+    @IBOutlet weak var namePicker: UIPickerView!
+
+    // functions to setup spinner
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return spinnerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int ) -> String? {
+        return spinnerData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedUser = spinnerData[row]
+        let userID = getUserIDbyName(userName: selectedUser)
+        print("\(selectedUser): \(userID)")
+    }
+
+    // Tasks to setup view
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // unhides nav bar for this view
+        self.navigationController?.isNavigationBarHidden = false
+}
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        // selected user is set to first user in spinner
+        selectedUser = spinnerData[0]
         
+        //load valeues from defaults
         pyBookURL = defaultValues.string(forKey: "url")!
         user_api_key = defaultValues.string(forKey: "api")!
 
@@ -44,28 +68,17 @@ class ReturnBookViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func returnBookButton(_ sender: Any) {
-        
-        let bookID = String(describing: book!.bookId)
-        let userID = String(1)
-        
-        returnBook(API: user_api_key, pyBookURL: pyBookURL, BookID: bookID, UserID: userID)
+    // perform the lending of a book
+    @IBAction func lendBookButton(_ sender: Any) {
+        let bookID = String(book!.bookId)
+        let userID = String(getUserIDbyName(userName: selectedUser))
+
+        // calls function to lend book
+        lendBook(API: user_api_key, pyBookURL: pyBookURL, BookID: bookID, UserID: userID )
     }
     
+    func lendBook(API key: String, pyBookURL url: String, BookID bookID: String, UserID userID: String ) {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    func returnBook(API key: String, pyBookURL url: String, BookID bookID: String, UserID userID: String ) {
-        
         // prepares the url from the login screen to be used in the api call
         // TODO better validation and formatting of the string
         
@@ -78,19 +91,17 @@ class ReturnBookViewController: UIViewController {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         
-        let putData = "{ \"action\": \"return\", \"bookID\": \"\(bookID)\", \"userID\": \"\(userID)\" }"
+        let putData = "{ \"action\": \"lend\", \"bookID\": \"\(bookID)\", \"userID\": \"\(userID)\" }"
         
         request.httpBody = putData.data(using: .utf8)
         
-        // does http request
+        // does https request to 
         let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
-            guard let data = data else {
+            guard data != nil else {
                 print("in let data guard")
                 print("connection failure is one option why whe get here")
                 return
             }
-            
-            print(data)
             
             //return to the scanner screen
             let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
@@ -101,4 +112,14 @@ class ReturnBookViewController: UIViewController {
         task.resume()
     }
 
+    func getUserIDbyName(userName user: String) -> Int {
+        for usr in self.users {
+            print( usr )
+            print( usr["name"]!! )
+            if usr["name"]!! as! String == user {
+                return usr["id"]!! as! Int
+            }
+        }
+        return -1
+    }
 }

@@ -91,22 +91,20 @@ class BookStatusViewController: UIViewController {
     }
     
     @IBAction func newCopyButton(_ sender: UIButton) {
+        
+        let cover = UIImage(named: "testCover")
+        
+        // tells the next view it came from the table view so it displays differently
+        defaultValues.set(false, forKey: "showCoverImage")
+        
         //switching the screen
         let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "NewBookViewController") as! NewBookViewController
         profileViewController.book = self.book
+        profileViewController.bookCover = cover
         self.navigationController?.pushViewController(profileViewController, animated: true)
         self.dismiss(animated: false, completion: nil)
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func queryUsers(API key: String, pyBookURL url: String) {
         
@@ -133,29 +131,17 @@ class BookStatusViewController: UIViewController {
                     return
             }
             
+            //adds all users from query to an array to pass to 'LendBookView'
             var spinnerData = Array<String>()
-            
-            // can prolly delete
-//            print("objects in queryUsers")
-//            print(users)
-            
             for user in users {
-                
-                // can prolly delete
-//                print(user["name"]!! as! String)
-                
                 spinnerData.append(user["name"]!! as! String)
             }
-            
+
             // removes first user, i.e. the admin
             // this probably needs to be more robust
             spinnerData.remove(at: 0)
             
-            // can prolly delete
-//            print(self.book.author_first_name)
-//            print("end objects in queryUsers")
-
-            
+            // change vews to lend book view
             let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "LendBookView") as! LendBookView
             profileViewController.book = self.book
             profileViewController.users = users

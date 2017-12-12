@@ -73,23 +73,16 @@ class LoginViewController: UIViewController {
             self.defaultValues.set(pyBookURL.text, forKey: "url")
 
             // testing if device has camera
-            var hasCamera: Bool
             if AVCaptureDevice.default(for: .video) != nil {
-                hasCamera = true
-            } else {
-                hasCamera = false
-            }
-            
-            if (hasCamera) {
-                // Has camera
-                print("has camera")
-
+                self.defaultValues.set(true, forKey: "camera")
+                
                 //switching the screen
                 let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
                 self.navigationController?.pushViewController(profileViewController, animated: true)
                 self.dismiss(animated: false, completion: nil)
             } else {
-                print("no camera")
+                self.defaultValues.set(false, forKey: "camera")
+                
                 //switching the screen
                 let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as! TabBarController
                 self.navigationController?.pushViewController(profileViewController, animated: true)

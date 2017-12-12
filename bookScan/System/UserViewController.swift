@@ -50,11 +50,6 @@ class UserViewController: UIViewController {
         print("In searchISBN")
         let ISBN = isbnField.text!
         
-        
-        print("ISBN form text field")
-        print(ISBN)
-
-        
         isbnInDB(ISBN: ISBN, URL: url, API: key)
     
     }
@@ -79,8 +74,6 @@ class UserViewController: UIViewController {
         // TODO better validation and formatting of the string
         let urlString = "https://\(url)/api/v1/\(key)/exists/\(isbn)"
         let ur = url
-        
-        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -140,16 +133,10 @@ class UserViewController: UIViewController {
                     return
             }
             
-            print(bookJson)
-            print(bookJson["status"]!!)
             let status = bookJson["status"]!! as! Bool
-            print(bookJson["title"]!!)
             let title = bookJson["title"]!! as! String
-            print(bookJson["isbn_10"]!!)
             let isbn10 = bookJson["isbn_10"]!! as! String
-            print(bookJson["isbn_13"]!!)
             let isbn13 = bookJson["isbn_13"]!! as! String
-            print(bookJson["author"]!!)
             let author = bookJson["author"]!! as! String
             let author_fn = author.components(separatedBy: " ")[0]
             let author_ln = author.components(separatedBy: " ")[1]
@@ -169,8 +156,6 @@ class UserViewController: UIViewController {
     func queryISBN(ISBN isbn: String, URL url: String, API key: String ) {
         // create url string for request
         let urlString = "https://\(url)/api/v1/\(key)/books/\(isbn)"
-        print("in queryISBN()")
-        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -187,11 +172,8 @@ class UserViewController: UIViewController {
             guard let booksJson = try? JSONSerialization.jsonObject(with: data, options: []) as! Array<[String:Any?]>
                 else {
                     print("in let json guard of queryISBN")
-                    
                     return
             }
-            
-            print(booksJson)
             
             var books = [Book]()
             
