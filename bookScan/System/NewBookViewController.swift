@@ -90,6 +90,17 @@ class NewBookViewController: UIViewController {
 
     }
     
+    @IBAction func editBookButton(_ sender: Any) {
+        let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditBookViewController") as! EditBookViewController
+        
+        print(book)
+        
+        profileViewController.book = book!
+        self.navigationController?.pushViewController(profileViewController, animated: true)
+        self.dismiss(animated: false, completion: nil)
+
+    }
+    
     func addBook(postData post: String, API key: String, pyBookURL url: String) {
         // prepares the url from the login screen to be used in the api call
         // TODO better validation and formatting of the string

@@ -21,6 +21,7 @@ class ScannerViewController: UIViewController {
     // setting up outlets
     @IBOutlet weak var searchIsbnField: UITextField!
     @IBOutlet weak var searchIsbnButton: UIButton!
+    @IBOutlet weak var scannerPaneLabel: UILabel!
     
     @IBOutlet weak var scanIsbnButton: UIButton!
     
@@ -62,14 +63,23 @@ class ScannerViewController: UIViewController {
         controller.errorDelegate = self as BarcodeScannerErrorDelegate
         controller.dismissalDelegate = self as BarcodeScannerDismissalDelegate
         
+        scannerPaneLabel.isHidden = true
+        
         if defaultValues.bool(forKey: "camera") {
             print(defaultValues.bool(forKey: "camera"))
             print("in view will appers camera")
             scanIsbnButton.isHidden = false
             
+            searchIsbnField.isHidden = true
+            searchIsbnButton.isHidden = true
+            
         } else {
             print("in view will appers no camera")
             scanIsbnButton.isHidden = true
+
+            searchIsbnField.isHidden = false
+            searchIsbnButton.isHidden = false
+
         }
     }
     
@@ -77,6 +87,7 @@ class ScannerViewController: UIViewController {
         super.viewWillAppear(animated)
         defaultValues.set(false, forKey: "fromBookView")
         self.navigationController?.isNavigationBarHidden = true
+
 //        searchIsbnField.text = ""
         
 //        if defaultValues.bool(forKey: "camera") {
@@ -305,7 +316,19 @@ extension ScannerViewController: BarcodeScannerCodeDelegate {
         
         let delayTime = DispatchTime.now() + Double(Int64(12 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            
+//            let unknownBook = Book(bookTitle: "Unknon", isbn10: code, isbn13: "", authorFirstName: "Unknon", authorLastName: "Unknon")
+//            //switching the screen back to the scanner
+//
+//            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditBookViewController") as! EditBookViewController
+//            profileViewController.book = unknownBook
+//            self.navigationController?.pushViewController(profileViewController, animated: true)
+//            self.dismiss(animated: false, completion: nil)
+
+            
             controller.resetWithError()
+
+            
         }
     }
 }

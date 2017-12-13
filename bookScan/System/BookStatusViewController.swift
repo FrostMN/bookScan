@@ -71,6 +71,7 @@ class BookStatusViewController: UIViewController {
         
         //switching the screen back to the scanner
         let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditBookViewController") as! EditBookViewController
+        profileViewController.book = book
         self.navigationController?.pushViewController(profileViewController, animated: true)
         self.dismiss(animated: false, completion: nil)
 

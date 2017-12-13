@@ -18,7 +18,9 @@ class UserViewController: UIViewController {
     @IBOutlet weak var isbnField: UITextField!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!
-
+    @IBOutlet weak var userPaneLabel: UILabel!
+    @IBOutlet weak var searchButton: UIButton!
+    
     var url: String = ""
     var key: String = ""
 
@@ -27,6 +29,11 @@ class UserViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         print("UserViewController viewDidLoad()")
 
+        
+        isbnField.isHidden = true
+        userPaneLabel.isHidden = true
+        searchButton.isHidden = true
+        
         userLabel.text = defaultValues.string(forKey: "username")
         urlLabel.text = defaultValues.string(forKey: "url")
 
