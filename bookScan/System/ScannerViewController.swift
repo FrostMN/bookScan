@@ -87,18 +87,8 @@ class ScannerViewController: UIViewController {
         super.viewWillAppear(animated)
         defaultValues.set(false, forKey: "fromBookView")
         self.navigationController?.isNavigationBarHidden = true
-
-//        searchIsbnField.text = ""
+        searchIsbnField.text = ""
         
-//        if defaultValues.bool(forKey: "camera") {
-//            print(defaultValues.bool(forKey: "camera"))
-//            print("in view will appers camera")
-//            scanIsbnButton.isHidden = false
-//
-//        } else {
-//            print("in view will appers no camera")
-//            scanIsbnButton.isHidden = true
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,10 +137,7 @@ class ScannerViewController: UIViewController {
                 print("it dosent exist")
                 self.defaultValues.set(true, forKey: "showCoverImage")
                 self.getBookCover(ISBN: isbn, URL: ur, API: key)
-
-//                self.addBook(ISBN: isbn, URL: ur, API: key)
             }
-            
         })
         task.resume()
     }
@@ -159,8 +146,6 @@ class ScannerViewController: UIViewController {
     func addBook( ISBN isbn: String, URL url: String, API key: String ) {
         // create url string for request
         let urlString = "https://\(url)/api/get/\(key)/\(isbn)"
-//        print("in addBook()")
-//        print(urlString)
         
         // creates urlsession and request
         let session = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
@@ -182,13 +167,9 @@ class ScannerViewController: UIViewController {
             }
             
             let status = bookJson["status"]!! as! Bool
-//            print(bookJson["title"]!!)
             let title = bookJson["title"]!! as! String
-//            print(bookJson["isbn_10"]!!)
             let isbn10 = bookJson["isbn_10"]!! as! String
-//            print(bookJson["isbn_13"]!!)
             let isbn13 = bookJson["isbn_13"]!! as! String
-//            print(bookJson["author"]!!)
             let author = bookJson["author"]!! as! String
             let author_fn = author.components(separatedBy: " ")[0]
             let author_ln = author.components(separatedBy: " ")[1]
@@ -316,19 +297,7 @@ extension ScannerViewController: BarcodeScannerCodeDelegate {
         
         let delayTime = DispatchTime.now() + Double(Int64(12 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            
-//            let unknownBook = Book(bookTitle: "Unknon", isbn10: code, isbn13: "", authorFirstName: "Unknon", authorLastName: "Unknon")
-//            //switching the screen back to the scanner
-//
-//            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditBookViewController") as! EditBookViewController
-//            profileViewController.book = unknownBook
-//            self.navigationController?.pushViewController(profileViewController, animated: true)
-//            self.dismiss(animated: false, completion: nil)
-
-            
             controller.resetWithError()
-
-            
         }
     }
 }
